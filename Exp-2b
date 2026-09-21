@@ -1,0 +1,152 @@
+// Experiment 2b: Layouts using Row, Column and Stack
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Layouts Demo',
+      home: const LayoutPage(),
+    );
+  }
+}
+
+// small helper so we don't repeat the same Container again and again
+Widget colorBox(Color color, String text) {
+  return Container(
+    width: 70,
+    height: 70,
+    color: color,
+    alignment: Alignment.center,
+    child: Text(
+      text,
+      style: const TextStyle(color: Colors.white, fontSize: 20),
+    ),
+  );
+}
+
+// helper for the section headings
+Widget heading(String text) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10),
+    child: Text(
+      text,
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+  );
+}
+
+class LayoutPage extends StatelessWidget {
+  const LayoutPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Row, Column and Stack')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ---------- ROW : children go left to right ----------
+            heading('1. Row (horizontal)'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                colorBox(Colors.red, 'A'),
+                colorBox(Colors.green, 'B'),
+                colorBox(Colors.blue, 'C'),
+              ],
+            ),
+
+            // ---------- COLUMN : children go top to bottom ----------
+            heading('2. Column (vertical)'),
+            Center(
+              child: Column(
+                children: [
+                  colorBox(Colors.purple, '1'),
+                  const SizedBox(height: 8),
+                  colorBox(Colors.orange, '2'),
+                  const SizedBox(height: 8),
+                  colorBox(Colors.teal, '3'),
+                ],
+              ),
+            ),
+
+            // ---------- ROW + COLUMN together ----------
+            heading('3. Row inside Column'),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    colorBox(Colors.indigo, 'A'),
+                    colorBox(Colors.pink, 'B'),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    colorBox(Colors.pink, 'C'),
+                    colorBox(Colors.indigo, 'D'),
+                  ],
+                ),
+              ],
+            ),
+
+            // ---------- STACK : children are placed on top of each other ----------
+            heading('4. Stack (overlapping)'),
+            Center(
+              child: Container(
+                width: 250,
+                height: 250,
+                color: Colors.grey.shade300,
+                child: Stack(
+                  children: [
+                    // bottom layer
+                    Container(
+                      width: 250,
+                      height: 250,
+                      color: Colors.blue.shade200,
+                    ),
+                    // Positioned decides where the child sits inside the Stack
+                    Positioned(
+                      top: 20,
+                      left: 20,
+                      child: Container(width: 120, height: 120, color: Colors.red),
+                    ),
+                    Positioned(
+                      bottom: 20,
+                      right: 20,
+                      child: Container(width: 120, height: 120, color: Colors.amber),
+                    ),
+                    // top layer, in the middle
+                    const Center(
+                      child: Text(
+                        'STACK',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+}
