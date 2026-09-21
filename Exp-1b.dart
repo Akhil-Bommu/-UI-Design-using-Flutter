@@ -92,3 +92,27 @@ void main() {
   nickname = 'Ravs';
   print('Nickname: $nickname');
 }
+
+
+//Day 2
+// a simple class
+class Student {
+  String name;
+  int age;
+  double cgpa;
+
+  Student(this.name, this.age, this.cgpa);
+
+  void showDetails() {
+    print('Name: $name | Age: $age | CGPA: $cgpa');
+  }
+}
+
+// normal function
+int add(int a, int b) {
+  return a + b;
+}
+
+// short (arrow) function
+bool isEven(int n) => n % 2 == 0;
+  
